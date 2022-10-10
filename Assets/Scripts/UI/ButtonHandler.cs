@@ -1,31 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; //so text, buttons etc work.
+//using UnityEngine.SceneManagement; //so that GetInstance() works.
 
 public class ButtonHandler : MonoBehaviour
 {
 
-    public GameObject CarSpawnPoint;
+    public Transform CarSpawnPoint; //an empty GameObject with the transform position for the car.
+    public int PreviousClicks = 0;
+    public int NextClicks = 0;
+    public GameObject Car;
+
+    CarManager CarMan;
+
+    //note for future reference, awake and start never get called on buttons.
+    //void awake() 
+
+    //void start()
 
 
     // On click of previous button.
     public void Previous()
     {
-        
+        CarMan = CarManager.GetInstance();
+        //Car = Resources.Load("4x4_blue") as GameObject;
+
+        //GameObject GO = Instantiate(Car) as GameObject;
+
+        if (CarMan.Chosen[0].ClonedCar != null)//delete the one we have now if we do have one
+        {
+            Destroy(CarMan.Chosen[0].ClonedCar);
+        }
+
+
+
+        GameObject GO = Instantiate(
+        //creates a car from the prefab
+        CarManager.GetInstance().Cars[0].CarPrefab[0],
+        //makes it appear at the position that I want.
+        CarSpawnPoint.position,
+        Quaternion.identity) as GameObject;
+
+        CarMan.Chosen[0].ClonedCar  = GO;
+
     }
 
     // On click of next button.
-    public void Next()
+    public void Next() //pass in as clicks
     {
 
         //if the previews potrait we had, is not the same as the active one we have
         //that means we changed characters
-        //      if (pl.previewPotrait != pl.activePotrait)
+        //      if (CarManager.Chosen != pl.activePotrait)
         //     {
-        //if (pl.createdCharacter != null)//delete the one we have now if we do have one
+        //if (CarManager.Chosen != null)//delete the one we have now if we do have one
         //{
-        //    Destroy(pl.createdCharacter);
+            //Destroy(CarManager.Chosen.ClonedCar);
         //}
 
 
@@ -33,9 +64,13 @@ public class ButtonHandler : MonoBehaviour
         //var HalfScale = new Vector3(.25f, .25f, .25f);
 
         //and create another one
-        // GameObject go = Instantiate(
-        //character gets made with this function
-        // CharacterManager.GetInstance().returnCharacterWithID(pl.activePotrait.characterId).prefab,
+        // GameObject GO = Instantiate(
+        //creates the car that's going to be in the scene using the prefab.
+
+        //for i = 1 to 6
+       // create prefab [NextClicks]
+       //i++
+        // CarManager.GetInstance().returnCharacterWithID(pl.activePotrait.characterId).prefab,
         //where you could maybe change the scale
         //spawn position
         //pl.charVisPos.position,
@@ -52,4 +87,5 @@ public class ButtonHandler : MonoBehaviour
         //go.transform.localScale = HalfScale;
 
     }
+
 }
