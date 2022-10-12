@@ -482,7 +482,6 @@ GameObject:
   - component: {fileID: 168466056}
   - component: {fileID: 168466055}
   - component: {fileID: 168466054}
-  - component: {fileID: 168466057}
   m_Layer: 5
   m_Name: ButtonNext
   m_TagString: Untagged
@@ -554,19 +553,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 168466055}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 168466057}
-        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: Next
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &168466055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,22 +592,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168466052}
   m_CullTransparentMesh: 1
---- !u!114 &168466057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 168466052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da73a541c5370244696ebf21a3c6919c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CarSpawnPoint: {fileID: 520251817}
-  PreviousClicks: 0
-  NextClicks: 0
-  Car: {fileID: 0}
 --- !u!1 &204018365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,12 +1172,57 @@ MonoBehaviour:
     - Green
     - White
   - CarID: 00000000010000000200000003000000040000000500000006000000
-    CarName: {fileID: 0}
-    CarPrefab: []
+    CarName: {fileID: 1436532820}
+    CarPrefab:
+    - {fileID: 154818, guid: 180951a2236212643938aebd52417541, type: 3}
+    - {fileID: 186548, guid: 069f7e878946edf4b8caf972c940f988, type: 3}
+    - {fileID: 178776, guid: 383ac66702b19014b8353f2b52650bd8, type: 3}
     CarSound: {fileID: 0}
-    CarPrice: 0
-    PaintPrice: 
-    PaintColours: []
+    CarPrice: 25000
+    PaintPrice: 3c00000078000000b4000000
+    PaintColours:
+    - Blue
+    - Red
+    - Yellow
+  - CarID: 00000000010000000200000003000000040000000500000006000000
+    CarName: {fileID: 1179857855}
+    CarPrefab:
+    - {fileID: 156544, guid: caf318c3d0041bd40900273c02a94996, type: 3}
+    - {fileID: 194000, guid: 8ba999b3064b7c04ead4cfbe91b0be03, type: 3}
+    - {fileID: 117432, guid: d55677935d5d1dc4595029d3a73b6661, type: 3}
+    CarSound: {fileID: 0}
+    CarPrice: 15000
+    PaintPrice: 14000000280000003c000000
+    PaintColours:
+    - Black
+    - Blue
+    - Yellow
+  - CarID: 00000000010000000200000003000000040000000500000006000000
+    CarName: {fileID: 2077807863}
+    CarPrefab:
+    - {fileID: 131776, guid: 5c9911cb535c05e49b09aeb66f9ad121, type: 3}
+    - {fileID: 153812, guid: 3621c935c51b80d44a8f4e0922e68e64, type: 3}
+    - {fileID: 106280, guid: 9e00cbc3689ca0e43a7562da496bdfdd, type: 3}
+    CarSound: {fileID: 0}
+    CarPrice: 16000
+    PaintPrice: 64000000c80000002c010000
+    PaintColours:
+    - Grey
+    - Red
+    - White
+  - CarID: 00000000010000000200000003000000040000000500000006000000
+    CarName: {fileID: 633140525}
+    CarPrefab:
+    - {fileID: 117612, guid: 5f7bccd1dc8484444b1c24e08f647a31, type: 3}
+    - {fileID: 123088, guid: dc6785f2ad22438449df9840ef0be308, type: 3}
+    - {fileID: 178192, guid: 36ff357027b84ab40a1ae443b7fa82b5, type: 3}
+    CarSound: {fileID: 0}
+    CarPrice: 12000
+    PaintPrice: 96000000fa0000005e010000
+    PaintColours:
+    - Black
+    - Grey
+    - White
   Chosen:
   - TotalPrice: 0
     CarName: {fileID: 0}
@@ -1216,7 +1232,8 @@ MonoBehaviour:
     Gadgets: {fileID: 0}
     ClonedCar: {fileID: 0}
   Upgrades:
-  - Rims: []
+  - Rims:
+    - {fileID: 0}
     RimsPrice: 
     InteriorPrice: 
     GadgetsPrice: 
@@ -5488,7 +5505,6 @@ GameObject:
   - component: {fileID: 1674467520}
   - component: {fileID: 1674467519}
   - component: {fileID: 1674467518}
-  - component: {fileID: 1674467521}
   m_Layer: 5
   m_Name: ButtonPrevious
   m_TagString: Untagged
@@ -5560,31 +5576,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1674467519}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1674467521}
-        m_TargetAssemblyTypeName: ButtonHandler, Assembly-CSharp
-        m_MethodName: Previous
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1965447271}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1674467519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5623,22 +5615,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674467516}
   m_CullTransparentMesh: 1
---- !u!114 &1674467521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1674467516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da73a541c5370244696ebf21a3c6919c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CarSpawnPoint: {fileID: 520251817}
-  PreviousClicks: 0
-  NextClicks: 0
-  Car: {fileID: 1965447270}
 --- !u!1 &1674605162
 GameObject:
   m_ObjectHideFlags: 0
@@ -6283,16 +6259,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828811708}
   m_CullTransparentMesh: 1
---- !u!1 &1965447270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 186698, guid: 7d2d29f1ac412204fb9307ed4f5192be, type: 3}
-  m_PrefabInstance: {fileID: 1232714951}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &1965447271 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 21269068, guid: 7d2d29f1ac412204fb9307ed4f5192be, type: 3}
-  m_PrefabInstance: {fileID: 1232714951}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2000767135
 GameObject:
   m_ObjectHideFlags: 0
@@ -6889,9 +6855,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CarSpawnPoint: {fileID: 520251817}
-  PreviousClicks: 0
   NextClicks: 0
   Car: {fileID: 0}
+  PreviousButton: {fileID: 1674467518}
+  NextButton: {fileID: 168466054}
 --- !u!1 &2100227026
 GameObject:
   m_ObjectHideFlags: 0

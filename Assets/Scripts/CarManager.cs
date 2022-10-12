@@ -50,6 +50,13 @@ public class CarManager : MonoBehaviour { //everything public because this will 
     {
         //Chosen[0].ClonedCar = Resources.Load("4x4_blue") as GameObject;
 
+        //to make a car appear at the start.
+
+        Buttons = ButtonHandler.GetInstance();
+
+        Buttons.Next();
+        Buttons.PreviousButton.gameObject.SetActive(false);
+        //Buttons.NextClicks = 0;
     }
 
 
