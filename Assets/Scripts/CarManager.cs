@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class CarManager : MonoBehaviour { //everything public because this will all be used outside of the class definition.
+public class CarManager : MonoBehaviour
+{ //everything public because this will all be used outside of the class definition.
 
     public List<CarBase> Cars = new List<CarBase>(); //the list of all the different types of car and their characteristics.
                                                      //will include string name, int price, colour etc
@@ -74,25 +75,27 @@ public class CarManager : MonoBehaviour { //everything public because this will 
 [System.Serializable]
 public class ChosenCar //this will be the class definition to make the list with the car & its upgrades chosen by the user.
 {
-    public int TotalPriceNum; //how much the car costs with the upgrades, this is calculated with CalculateTotal() function.
-    public Text TotalPrice;
+    public int TotalPrice; //how much the car costs with the upgrades, this is calculated with CalculateTotal() function.
     public Text CarName; //text of all chosen features of the car for the print screen.
-    public Text PaintColour;
+    public Text Paint;
     public Text Rims;
     public Text Interior;
     public Text Gadgets;
-    public GameObject ClonedCar; //for debugging purposes.
+    public GameObject ClonedCar;
 
 }
 
 [System.Serializable]
 public class UpgradeBase //the class definition for the list of possible upgrade configuration options.
 {
-        public Text[] Rims;
-        public Text Interior;
-        public Text Gadgets;
-        public int[] RimsPrice;
-        public int[] InteriorPrice;
-        public int[] GadgetsPrice;
+    public Text[] Paint;
+    // public int[] PaintPrice;
+    public Text[] Rims;
+    public int[] RimsPrice;
+    public Text[] Gadgets;
+    public int[] GadgetsPrice;
+    public Text[] Interior;
+    public int[] InteriorPrice;
+
 
 }

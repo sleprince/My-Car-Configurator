@@ -9,9 +9,31 @@ public class ButtonHandler : MonoBehaviour
 
     public Transform CarSpawnPoint; //an empty GameObject with the transform position for the car.
     public int NumClicks; //amount of times the button has been clicked by the user.
+
     public Button PreviousButton; //the buttons themselves.
     public Button NextButton;
+    public Button PaintButton;
+    public Button RimsButton;
+    public Button InteriorButton;
+    public Button GadgetsButton;
+
     public Text CarName;
+    public Text PaintName;
+    public Text RimsName;
+    public Text InteriorName;
+    public Text GadgetsName;
+
+    public int w;
+    public int x;
+    public int y;
+    public int z;
+
+    public int [] UpgradesPrice;
+    public int Price;
+    public int TotalUpgradesPrice;
+
+    public Text TotalPrice;
+
 
     CarManager CarMan; //reference to my CarManager.
 
@@ -35,11 +57,25 @@ public class ButtonHandler : MonoBehaviour
     {
         PreviousButton.onClick.AddListener(Previous); //if clicked run method Previous.
         NextButton.onClick.AddListener(Next);
+
+        PaintButton.onClick.AddListener(ChangePaint);
+        RimsButton.onClick.AddListener(ChangeRims);
+        InteriorButton.onClick.AddListener(ChangeInterior);
+        GadgetsButton.onClick.AddListener(ChangeGadgets);
+
     }
+
 
     public void Update()
     {
         CarName.text = CarMan.Chosen[0].CarName.text ; //make the car name appear in the UI.
+
+        TotalUpgradesPrice = (UpgradesPrice[0]) + (UpgradesPrice[1]) + (UpgradesPrice[2]) + (UpgradesPrice[3]);
+
+
+        Price = CarMan.Cars[NumClicks].CarPrice + TotalUpgradesPrice;
+        TotalPrice.text = Price.ToString();
+
         //Debug.Log(CarName.text);
 
     }
@@ -127,7 +163,10 @@ public class ButtonHandler : MonoBehaviour
 
         CarMan.Chosen[0].ClonedCar = GO; //this was for debugging purposes.
         CarMan.Chosen[0].CarName = CarManager.GetInstance().ReturnCarWithID(NumClicks).CarName; //put the relevant CarName in
-                                                                                                 //the Chosen list.
+                                                                                                //the Chosen list.
+        
+
+        TotalPrice.text = CarMan.Cars[NumClicks].CarPrice.ToString();
     }
 
 
@@ -135,6 +174,80 @@ public class ButtonHandler : MonoBehaviour
     public static ButtonHandler GetInstance() //all of this is so that I can call this script from objects that do not have it attached.
     {
         return instance;
+    }
+
+    void ChangePaint()
+    {
+        UpgradesPrice[0] = 0;
+
+        PaintName.gameObject.SetActive(true);
+
+        CarMan.Chosen[0].Paint = CarMan.Upgrades[0].Paint[x];
+        PaintName.text = CarMan.Upgrades[0].Paint[x].text; //make the name appear in the UI.
+
+        UpgradesPrice[0] = CarMan.Cars[NumClicks].PaintPrice[x];
+
+        x++;
+
+        if (x== 3)
+        { x = 0; }
+
+    }
+
+    void ChangeRims()
+    {
+        UpgradesPrice[1] = 0;
+
+        RimsName.gameObject.SetActive(true);
+
+        CarMan.Chosen[0].Rims = CarMan.Upgrades[0].Rims[y];
+        RimsName.text = CarMan.Upgrades[0].Rims[y].text; //make the name appear in the UI.
+
+        UpgradesPrice[1] = CarMan.Upgrades[0].RimsPrice[y];
+
+        y++;
+
+        if (y == 3)
+        { y = 0; }
+
+
+    }
+
+    void ChangeInterior()
+    {
+        InteriorName.gameObject.SetActive(true);
+
+        UpgradesPrice[2] = 0;
+
+        CarMan.Chosen[0].Interior = CarMan.Upgrades[0].Interior[z];
+        InteriorName.text = CarMan.Upgrades[0].Interior[z].text; //make the name appear in the UI.
+
+        UpgradesPrice[2] = CarMan.Upgrades[0].InteriorPrice[z];
+
+        z++;
+
+        if (z == 3)
+        { z = 0; }
+
+    }
+
+    void ChangeGadgets()
+    {
+        UpgradesPrice[3] = 0;
+
+        GadgetsName.gameObject.SetActive(true);
+
+        CarMan.Chosen[0].Gadgets = CarMan.Upgrades[0].Gadgets[w];
+        GadgetsName.text = CarMan.Upgrades[0].Gadgets[w].text; //make the name appear in the UI.
+
+        UpgradesPrice[3] = CarMan.Upgrades[0].GadgetsPrice[w];
+
+        w++;
+
+        if (w == 3)
+        { w = 0; }
+
+
     }
 
 }
