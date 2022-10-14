@@ -1,5 +1,5 @@
 where did they start it from 
-
+what affect did the pandemic have on their organisation
 is there chance to learn vr development
 
 
@@ -14,11 +14,12 @@ commitments. Self-paced, with a mentor, online
 and effort.”
 
 
-On the right track to finish it without too much more time, and will do so, got carried away with the previous/next buttons functionality and spent too long on that. First time using the UI buttons so there was some new learning involved too.
-
+First time using the UI buttons so there was some new learning involved too.
 Was more precious about the UI layout at the start.
+(previous next crazy system spend too much tome on
 
-(previous next numbers dont work properly,
-price gets messed up if you change cars, need to do same array system with car price or something)
+As mature student not distracted by nights out.
 
-Make vid of extra bits and add on tmoro.
+quality of learning on degree was not good, not many people got jobs in games.
+Even with whittling down job applied to, to ones that dont require prior experience, over the years,
+quite a few, never even got an interview, shut out.

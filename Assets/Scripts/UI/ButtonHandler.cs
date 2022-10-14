@@ -23,6 +23,7 @@ public class ButtonHandler : MonoBehaviour
     public Text InteriorName;
     public Text GadgetsName;
 
+    public int v;
     public int w;
     public int x;
     public int y;
@@ -70,7 +71,11 @@ public class ButtonHandler : MonoBehaviour
     {
         CarName.text = CarMan.Chosen[0].CarName.text ; //make the car name appear in the UI.
 
-        TotalUpgradesPrice = (UpgradesPrice[0]) + (UpgradesPrice[1]) + (UpgradesPrice[2]) + (UpgradesPrice[3]);
+        bool UpgradeTextOn = (PaintName.gameObject.activeSelf || RimsName.gameObject.activeSelf || InteriorName.gameObject.activeSelf
+                             || GadgetsName.gameObject.activeSelf);
+
+        if (UpgradeTextOn)
+        { TotalUpgradesPrice = (UpgradesPrice[0]) + (UpgradesPrice[1]) + (UpgradesPrice[2]) + (UpgradesPrice[3]); }
 
 
         Price = CarMan.Cars[NumClicks].CarPrice + TotalUpgradesPrice;
@@ -84,6 +89,13 @@ public class ButtonHandler : MonoBehaviour
     //on click of the next button.
     public void Next()
     {
+
+        TotalUpgradesPrice = 0;
+
+        PaintName.gameObject.SetActive(false);
+        RimsName.gameObject.SetActive(false);
+        InteriorName.gameObject.SetActive(false);
+        GadgetsName.gameObject.SetActive(false);
 
         CarBuilder();
 
@@ -114,6 +126,7 @@ public class ButtonHandler : MonoBehaviour
     //on click of the previous button.
     public void Previous() 
     {
+        TotalUpgradesPrice = 0;
 
         CarBuilder();
 
@@ -176,7 +189,29 @@ public class ButtonHandler : MonoBehaviour
         return instance;
     }
 
-    void ChangePaint()
+    void CarPainter()
+    {
+        
+
+        if (CarMan.Chosen[0].ClonedCar != null)//If there's already a car there, destroy it before making the new one.
+        {
+            Destroy(CarMan.Chosen[0].ClonedCar);
+        }
+
+        GameObject GO = Instantiate(
+        //creates a car from the prefab
+        CarManager.GetInstance().ReturnCarWithID(NumClicks - 1).CarPrefab[v],
+        //makes it appear at the position that I want.
+        CarSpawnPoint.position,
+        Quaternion.identity) as GameObject;
+
+        CarMan.Chosen[0].ClonedCar = GO;
+
+        v++;
+
+    }
+
+        void ChangePaint()
     {
         UpgradesPrice[0] = 0;
 
@@ -186,6 +221,11 @@ public class ButtonHandler : MonoBehaviour
         PaintName.text = CarMan.Upgrades[0].Paint[x].text; //make the name appear in the UI.
 
         UpgradesPrice[0] = CarMan.Cars[NumClicks].PaintPrice[x];
+
+        if (v == 3)
+        { v = 0; }
+
+        CarPainter();
 
         x++;
 
