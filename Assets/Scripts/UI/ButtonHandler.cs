@@ -41,22 +41,9 @@ public class ButtonHandler : MonoBehaviour
     //note for future reference, awake and start never get called if you use clickon() buttons in editor.
     // void awake()
 
-    void start()
+    public void Awake()
     {
 
-    }
-
-
-    //this works instead for a disabled object.
-    public ButtonHandler() //equivalent to wake.
-    {
-        instance = this; //part of the method that lets me use methods from this class in other scripts.
-
-    }
-
-     void OnEnable() //like start.
-    {
-        PreviousButton.onClick.AddListener(Previous); //if clicked run method Previous.
         NextButton.onClick.AddListener(Next);
 
         PaintButton.onClick.AddListener(ChangePaint);
@@ -64,6 +51,14 @@ public class ButtonHandler : MonoBehaviour
         InteriorButton.onClick.AddListener(ChangeInterior);
         GadgetsButton.onClick.AddListener(ChangeGadgets);
 
+        instance = this; //part of the method that lets me use methods from this class in other scripts.
+
+    }
+
+    public void Start()
+    {
+        NumClicks = 0;
+        Next();
     }
 
 
@@ -106,52 +101,7 @@ public class ButtonHandler : MonoBehaviour
 
         if (NumClicks == 5) //to stop NumClicks being a higher number than that in the list of cars.
         {
-            NumClicks--;
-            Previous(); //to stop you having to click twice before anything happens.
-            NextButton.gameObject.SetActive(false); //to stop user being able to go past the number of cars.
-        }
-
-        else
-        {
-            NextButton.gameObject.SetActive(true);
-        }
-
-        if (NumClicks != 0)
-        {
-            PreviousButton.gameObject.SetActive(true); //make the other button visible whenever relevant.
-        }
-
-    }
-
-    //on click of the previous button.
-    public void Previous() 
-    {
-        TotalUpgradesPrice = 0;
-
-        CarBuilder();
-
-        //to make a different car appear each time the button is clicked.
-        if (NumClicks > -1)
-        {
-            NumClicks--;
-        }
-
-        if (NumClicks == -1)
-        {
-            NumClicks++;
-            Next(); //to stop you having to click twice before anything happens.
-            PreviousButton.gameObject.SetActive(false);
-
-        }
-
-        else
-        {
-            PreviousButton.gameObject.SetActive(true);
-        }
-
-        if (NumClicks != 5)
-        {
-            NextButton.gameObject.SetActive(true);
+            NumClicks = 0;
         }
 
     }

@@ -46,17 +46,6 @@ public class CarManager : MonoBehaviour
 
     }
 
-    void Start()
-    {
-        //to make a car appear at the start.
-
-        Buttons = ButtonHandler.GetInstance();
-
-        Buttons.Next();
-        Buttons.PreviousButton.gameObject.SetActive(false);
-    }
-
-
     [System.Serializable] //so that I can use Unity editor to set these.
     public class CarBase
     {
