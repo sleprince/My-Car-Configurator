@@ -12,11 +12,11 @@ public class CarManager : MonoBehaviour
                                                      //objects per element.
 
     public List<ChosenCar> Chosen = new List<ChosenCar>(); //the list for the currently chosen car.
-    public List<UpgradeBase> Upgrades = new List<UpgradeBase>();
+    public List<UpgradeBase> Upgrades = new List<UpgradeBase>(); //the list of upgrades.
 
     ButtonHandler Buttons;
 
-    //we use this function to find characters from their id
+    //we use this function to find cars from their id.
     public CarBase ReturnCarWithID(int ID)
     {
         CarBase retVal = null;
@@ -63,22 +63,22 @@ public class CarManager : MonoBehaviour
 
 [System.Serializable]
 public class ChosenCar //this will be the class definition to make the list with the car & its upgrades chosen by the user.
-{
+{                      //could be useful to keep as a list in case of making it a 2 player car configurator.
+
     public int TotalPrice; //how much the car costs with the upgrades, this is calculated with CalculateTotal() function.
     public Text CarName; //text of all chosen features of the car for the print screen.
     public Text Paint;
     public Text Rims;
     public Text Interior;
     public Text Gadgets;
-    public GameObject ClonedCar;
+    public GameObject ClonedCar; //the car that's appearing in the UI.
 
 }
 
 [System.Serializable]
 public class UpgradeBase //the class definition for the list of possible upgrade configuration options.
 {
-    public Text[] Paint;
-    // public int[] PaintPrice;
+    public Text[] Paint; //text and price arrays for the upgrades.
     public Text[] Rims;
     public int[] RimsPrice;
     public Text[] Gadgets;

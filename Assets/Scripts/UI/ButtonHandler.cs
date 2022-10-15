@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //so text, buttons etc work.
-//using UnityEngine.SceneManagement; //so that GetInstance() works.
 
 public class ButtonHandler : MonoBehaviour
 {
@@ -17,64 +16,79 @@ public class ButtonHandler : MonoBehaviour
     public Button InteriorButton;
     public Button GadgetsButton;
 
-    public Text CarName;
+    public Text CarName; //alll the texts that are attached to gameobjects within Editor.
     public Text PaintName;
     public Text RimsName;
     public Text InteriorName;
     public Text GadgetsName;
 
-    public int v;
-    public int w;
+    public int w; // integers used for the amount of times the upgrades buttons have been clicked.
     public int x;
     public int y;
     public int z;
+    public int Touring = 0;
 
-    public int [] UpgradesPrice;
-    public int Price;
+    public int Price; //all the prices.
+    public int [] UpgradesPrice; 
     public int TotalUpgradesPrice;
 
-    public Text TotalPrice;
+    public Text TotalPrice; //text version of price, will convert the int to string in script.
 
 
     CarManager CarMan; //reference to my CarManager.
 
-    //note for future reference, awake and start never get called if you use clickon() buttons in editor.
-    // void awake()
+    //note for future reference, awake and start never get called if you use onClick() buttons in Editor.
 
     public void Awake()
     {
 
-        NextButton.onClick.AddListener(Next);
-
+        NextButton.onClick.AddListener(Next); //so that each button calls the relevant method when clicked.
         PaintButton.onClick.AddListener(ChangePaint);
         RimsButton.onClick.AddListener(ChangeRims);
         InteriorButton.onClick.AddListener(ChangeInterior);
         GadgetsButton.onClick.AddListener(ChangeGadgets);
 
-        instance = this; //part of the method that lets me use methods from this class in other scripts.
-
     }
 
     public void Start()
     {
-        NumClicks = 0;
-        Next();
+        NumClicks = 0; //to make the first car at the start.
+        Next(); //to make a car at the start.
+    }
+
+    public void ResetUpgrades()
+    {
+        if (!PaintName.gameObject.activeSelf)
+        { UpgradesPrice[0] = 0; } //reset this individual update type's price to 0 when button is not clicked yet.
+
+        if (!RimsName.gameObject.activeSelf)
+        { UpgradesPrice[1] = 0; }
+
+
+        if (!InteriorName.gameObject.activeSelf)
+        { UpgradesPrice[2] = 0; }
+
+        if (!GadgetsName.gameObject.activeSelf)
+        { UpgradesPrice[3] = 0; }
     }
 
 
     public void Update()
     {
+
+        ResetUpgrades();
+
         CarName.text = CarMan.Chosen[0].CarName.text ; //make the car name appear in the UI.
 
         bool UpgradeTextOn = (PaintName.gameObject.activeSelf || RimsName.gameObject.activeSelf || InteriorName.gameObject.activeSelf
                              || GadgetsName.gameObject.activeSelf);
 
-        if (UpgradeTextOn)
-        { TotalUpgradesPrice = (UpgradesPrice[0]) + (UpgradesPrice[1]) + (UpgradesPrice[2]) + (UpgradesPrice[3]); }
+        if (UpgradeTextOn) //if any 1 of the uprade texts are visible, otherwise upgrades price remains at 0.
+        { TotalUpgradesPrice = (UpgradesPrice[0] + UpgradesPrice[1] + UpgradesPrice[2] + UpgradesPrice[3]); }
 
 
-        Price = CarMan.Cars[NumClicks].CarPrice + TotalUpgradesPrice;
-        TotalPrice.text = Price.ToString();
+        Price = CarMan.Cars[NumClicks].CarPrice + TotalUpgradesPrice; //adding car price to price of all the upgrades.
+        TotalPrice.text = Price.ToString(); //converting the int to string and showing it in the UI.
 
         //Debug.Log(CarName.text);
 
@@ -85,14 +99,10 @@ public class ButtonHandler : MonoBehaviour
     public void Next()
     {
 
-        TotalUpgradesPrice = 0;
+        Reset(); //resets so that no upgrades have been added and upgrade texts are not visible.
 
-        PaintName.gameObject.SetActive(false);
-        RimsName.gameObject.SetActive(false);
-        InteriorName.gameObject.SetActive(false);
-        GadgetsName.gameObject.SetActive(false);
 
-        CarBuilder();
+        CarBuilder(); //clone a car from the relevant prefab.
 
         if (NumClicks < 5)         //to make a different car appear each time the button is clicked.
         {
@@ -103,6 +113,24 @@ public class ButtonHandler : MonoBehaviour
         {
             NumClicks = 0;
         }
+
+    }
+
+    public void Reset()
+    {
+
+        w = 0;
+        x = 0;
+        y = 0;
+        z = 0;
+
+        TotalUpgradesPrice = 0;
+        
+        PaintName.gameObject.SetActive(false);
+        RimsName.gameObject.SetActive(false);
+        InteriorName.gameObject.SetActive(false);
+        GadgetsName.gameObject.SetActive(false);
+
 
     }
 
@@ -129,17 +157,10 @@ public class ButtonHandler : MonoBehaviour
                                                                                                 //the Chosen list.
         
 
-        TotalPrice.text = CarMan.Cars[NumClicks].CarPrice.ToString();
+       // TotalPrice.text = CarMan.Cars[NumClicks].CarPrice.ToString(); //adds the car price to TotalPrice to display it in the UI in update.
     }
 
-
-    public static ButtonHandler instance;
-    public static ButtonHandler GetInstance() //all of this is so that I can call this script from objects that do not have it attached.
-    {
-        return instance;
-    }
-
-    void CarPainter()
+    public void CarPainter()
     {
         
 
@@ -148,36 +169,55 @@ public class ButtonHandler : MonoBehaviour
             Destroy(CarMan.Chosen[0].ClonedCar);
         }
 
-        GameObject GO = Instantiate(
-        //creates a car from the prefab
-        CarManager.GetInstance().ReturnCarWithID(NumClicks - 1).CarPrefab[v],
+        if (NumClicks == 0)
+        {
+            Touring = 4; //this is for when it gets to the end of the list, so that it's not trying to get object number -1 below.
+        }
+
+        if (Touring != 4)
+        {
+            GameObject GO = Instantiate(
+        //creates a car from the prefab, -1 because it will otherwise make the next car, also uses x to choose next car in array of colours.
+        CarMan.Cars[NumClicks - 1].CarPrefab[x],
         //makes it appear at the position that I want.
         CarSpawnPoint.position,
         Quaternion.identity) as GameObject;
 
         CarMan.Chosen[0].ClonedCar = GO;
+        }
 
-        v++;
+            else
+        {
+            GameObject GO = Instantiate(
+            //creates a car from the prefab, -1 because it will otherwise make the next car, also uses x to choose next car in array of colours.
+            CarMan.Cars[Touring].CarPrefab[x],
+            //makes it appear at the position that I want.
+            CarSpawnPoint.position,
+            Quaternion.identity) as GameObject;
+
+            CarMan.Chosen[0].ClonedCar = GO;
+
+            Touring = 0;
+
+        }
+
+
 
     }
 
-        void ChangePaint()
+    public void ChangePaint()
     {
-        UpgradesPrice[0] = 0;
 
-        PaintName.gameObject.SetActive(true);
+        PaintName.gameObject.SetActive(true); //make the name of the upgrade appear.
 
-        CarMan.Chosen[0].Paint = CarMan.Upgrades[0].Paint[x];
+        CarMan.Chosen[0].Paint = CarMan.Upgrades[0].Paint[x]; //originally for debugging purposes.
         PaintName.text = CarMan.Upgrades[0].Paint[x].text; //make the name appear in the UI.
 
-        UpgradesPrice[0] = CarMan.Cars[NumClicks].PaintPrice[x];
+        UpgradesPrice[0] = CarMan.Cars[NumClicks].PaintPrice[x]; //get the price of that upgrade from car manager.
 
-        if (v == 3)
-        { v = 0; }
+        CarPainter(); //paint the car.
 
-        CarPainter();
-
-        x++;
+        x++; //equivalent of NumClicks for each upgrade button.
 
         if (x== 3)
         { x = 0; }
@@ -186,12 +226,11 @@ public class ButtonHandler : MonoBehaviour
 
     void ChangeRims()
     {
-        UpgradesPrice[1] = 0;
 
         RimsName.gameObject.SetActive(true);
 
         CarMan.Chosen[0].Rims = CarMan.Upgrades[0].Rims[y];
-        RimsName.text = CarMan.Upgrades[0].Rims[y].text; //make the name appear in the UI.
+        RimsName.text = CarMan.Upgrades[0].Rims[y].text; //make the name of the upgrade appear in the UI.
 
         UpgradesPrice[1] = CarMan.Upgrades[0].RimsPrice[y];
 
@@ -207,8 +246,6 @@ public class ButtonHandler : MonoBehaviour
     {
         InteriorName.gameObject.SetActive(true);
 
-        UpgradesPrice[2] = 0;
-
         CarMan.Chosen[0].Interior = CarMan.Upgrades[0].Interior[z];
         InteriorName.text = CarMan.Upgrades[0].Interior[z].text; //make the name appear in the UI.
 
@@ -223,7 +260,6 @@ public class ButtonHandler : MonoBehaviour
 
     void ChangeGadgets()
     {
-        UpgradesPrice[3] = 0;
 
         GadgetsName.gameObject.SetActive(true);
 
