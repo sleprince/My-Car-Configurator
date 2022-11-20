@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI; //so text, buttons etc work.
 
@@ -37,6 +38,8 @@ public class ButtonHandler : MonoBehaviour
 
     CarManager CarMan; //reference to my CarManager.
 
+    CarDisplay carDisplay;
+
     //note for future reference, awake and start never get called if you use onClick() buttons in Editor.
 
     public void Awake()
@@ -54,6 +57,7 @@ public class ButtonHandler : MonoBehaviour
     {
         NumClicks = 0; //to make the first car at the start.
         Next(); //to make a car at the start.
+
     }
 
     public void ResetUpgrades()
@@ -98,20 +102,43 @@ public class ButtonHandler : MonoBehaviour
     //on click of the next button.
     public void Next()
     {
+        carDisplay = CarDisplay.GetInstance();
+
+        if (carDisplay.ID == 4) 
+        {
+            carDisplay.ID = -1;
+        }
+
+
+        CarMan = CarManager.GetInstance();
+
+
+        //carDisplay.car = Resources.Load<Car>("Objects/Mini.asset");
 
         Reset(); //resets so that no upgrades have been added and upgrade texts are not visible.
 
 
         CarBuilder(); //clone a car from the relevant prefab.
 
+
+       
+
+        carDisplay.ID++;
+
+
         if (NumClicks < 5)         //to make a different car appear each time the button is clicked.
         {
             NumClicks++;
+
+
+
+            //I get looping null reference if I do it like this, was because I forgot awake set instance this on CarDisplay.
         }
 
         if (NumClicks == 5) //to stop NumClicks being a higher number than that in the list of cars.
         {
             NumClicks = 0;
+            carDisplay.ID = 4;
         }
 
     }
@@ -136,7 +163,6 @@ public class ButtonHandler : MonoBehaviour
 
     public void CarBuilder()
     {
-        CarMan = CarManager.GetInstance();
 
 
         if (CarMan.Chosen[0].ClonedCar != null)//If there's already a car there, destroy it before making the new one.
@@ -274,6 +300,12 @@ public class ButtonHandler : MonoBehaviour
         { w = 0; }
 
 
+    }
+
+    public static ButtonHandler instance;
+    public static ButtonHandler GetInstance() //all of this is so that I can call this script from objects that do not have it attached.
+    {
+        return instance;
     }
 
 }

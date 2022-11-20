@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 541f391432b5e8043a92d0342fc3e221, type: 3}
-  m_Name: Cabrio
+  m_Name: 4x4
   m_EditorClassIdentifier: 
-  CarName: Cabrio
-  description: Awesome convertible.
-  CarSprite: {fileID: 21300000, guid: 25dc12f3ad25a4d639b767c8f633519f, type: 3}
-  price: 170000
+  CarName: 4x4
+  description: Offroad mayhem!
+  HorsePower: 400
+  MPG: 40
